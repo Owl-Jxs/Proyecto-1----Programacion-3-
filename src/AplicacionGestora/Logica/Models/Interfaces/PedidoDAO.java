@@ -1,7 +1,8 @@
 package AplicacionGestora.Logica.Models.Interfaces;
 import AplicacionGestora.Logica.Models.Pedido;
 import java.util.List;
-public class PedidoDAO {
+
+public interface PedidoDAO {
     void guardarPedido(Pedido pedido);
 
     List<Pedido> obtenerHistorialPedidos();
