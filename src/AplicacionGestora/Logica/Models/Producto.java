@@ -1,32 +1,48 @@
 package AplicacionGestora.Logica.Models;
 import AplicacionGestora.Logica.Models.Interfaces.IProducto;
 
-public class Producto extends IProducto {
+public class Producto implements IProducto {
     private int id;
     private String nombre;
     private double precio;
-    private categoriaProducto categoria;
+    private CategoriaProducto categoria;
 
-    public Producto(int id, String nombre, double precio, categoriaProducto categoria){
+    private void validarPrecio(double precio) {
+        if (precio < 0) {
+            throw new IllegalArgumentException("El precio no puede ser negativo");
+        }
+    }
+
+    public Producto(int id, String nombre, double precio, CategoriaProducto categoria) {
+        if (id < 0) {
+            throw new IllegalArgumentException("El id no puede ser negativo");
+        }
+        if (nombre == null || nombre.isEmpty()) {
+            throw new IllegalArgumentException("Nombre no puede ser vacío o nulo");
+        }
+        validarPrecio(precio);
+        if (categoria == null) {
+            throw new IllegalArgumentException("Categoria no puede ser nulo");
+        }
+
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.categoria = categoria;
     }
 
-    @Override public void setId(int id) { this.id = id; }
-    @Override public void setNombre(String nombre) { this.nombre = nombre; }
-    @Override public void setPrecio(double precio) { this.precio = precio; }
-    @Override public void setCategoria(categoriaProducto categoria) { this.categoria = categoria; }
+    @Override public void setPrecio(double precio) {
+        validarPrecio(precio);
+        this.precio = precio;
+    }
 
     @Override public int getId() { return id; }
     @Override public String getNombre() { return nombre; }
     @Override public double getPrecio() { return precio; }
-    @Override public categoriaProducto getCategoria() { return categoria; }
-
+    @Override public CategoriaProducto getCategoria() { return categoria; }
     @Override
     public String toString() {
-        return "Producto{id=" + id + ", nombre='" + nombre + "', precio=" + precio + ", categoria=" + categoria.name() + "}";
+        return "Producto Descripcion -> ID: " + id + " | Nombre: " + nombre + " | Precio: " + precio  + " | Categoria: " + categoria;
     }
 }
 
