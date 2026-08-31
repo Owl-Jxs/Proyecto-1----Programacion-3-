@@ -17,7 +17,7 @@ public interface PedidoDAO {
         return pedidos;
     }
 
-    /*Busca un pedido utilizando su identificador*/
+    /*Busca un pedido utilizando su id*/
     default Pedido obtenerPedidoPorId(int id) {
         for (Pedido pedido : pedidos) {
             if (pedido.getId() == id) {

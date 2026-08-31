@@ -13,7 +13,7 @@ public interface CatalogoDAO {
         productos.add(producto);
     }
 
-    /*Busca un producto por medio de su identificador*/
+    /*Busca un producto por medio de su id*/
     default Producto leerProducto(int id) {
         for (Producto producto : productos) {
             if (producto.getId() == id) {
@@ -33,7 +33,7 @@ public interface CatalogoDAO {
         }
     }
 
-    /*Elimina un producto del catálogo utilizando su identificador*/
+    /*Elimina un producto del catálogo utilizando su id*/
     default void borrarProducto(int id) {
         for (int i = 0; i < productos.size(); i++) {
             if (productos.get(i).getId() == id) {
