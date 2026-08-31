@@ -1,7 +1,8 @@
 package AplicacionGestora.Logica.Models.Interfaces;
 import AplicacionGestora.Logica.Models.Producto;
 import java.util.List;
-public abstract class CatalogoDAO {
+
+public interface CatalogoDAO {
     void crearProducto(Producto producto);
 
     Producto leerProducto(int id);
