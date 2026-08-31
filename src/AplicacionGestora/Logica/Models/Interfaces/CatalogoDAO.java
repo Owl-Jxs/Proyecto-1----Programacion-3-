@@ -1,15 +1,50 @@
 package AplicacionGestora.Logica.Models.Interfaces;
+
 import AplicacionGestora.Logica.Models.Producto;
-import java.util.List;
 
-public abstract class CatalogoDAO {
-    abstract void crearProducto(Producto producto);
+import java.util.ArrayList;
 
-    abstract Producto leerProducto(int id);
+public interface CatalogoDAO {
 
-    abstract void actualizarProducto(Producto producto);
+    ArrayList<Producto> productos = new ArrayList<>();
 
-    abstract void borrarProducto(int id);
+    /*Agrega un producto al catálogo*/
+    default void crearProducto(Producto producto) {
+        productos.add(producto);
+    }
 
-    abstract List<Producto> listarProductos();
+    /*Busca un producto por medio de su identificador*/
+    default Producto leerProducto(int id) {
+        for (Producto producto : productos) {
+            if (producto.getId() == id) {
+                return producto;
+            }
+        }
+        return null;
+    }
+
+    /*Actualiza la información de un producto existente*/
+    default void actualizarProducto(Producto producto) {
+        for (int i = 0; i < productos.size(); i++) {
+            if (productos.get(i).getId() == producto.getId()) {
+                productos.set(i, producto);
+                return;
+            }
+        }
+    }
+
+    /*Elimina un producto del catálogo utilizando su identificador*/
+    default void borrarProducto(int id) {
+        for (int i = 0; i < productos.size(); i++) {
+            if (productos.get(i).getId() == id) {
+                productos.remove(i);
+                return;
+            }
+        }
+    }
+
+    /*Obtiene todos los productos registrados en el catálogo*/
+    default ArrayList<Producto> listarProductos() {
+        return productos;
+    }
 }
