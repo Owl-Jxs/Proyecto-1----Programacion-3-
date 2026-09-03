@@ -1,58 +1,80 @@
 package AplicacionGestora.Logica.Models;
+
 import AplicacionGestora.Logica.Models.Interfaces.IProducto;
 
-// Clase que representa un producto en el sistema de gestión. 
-// Implementa la interfaz IProducto.
 public class Producto implements IProducto {
-    private int id;
-    private String nombre;
+    private final int id;
+    private final String nombre;
     private double precio;
-    private CategoriaProducto categoria;
+    private final CategoriaProducto categoria;
 
-    private void validarPrecio(double precio) {
-        if (precio < 0) {
-            throw new IllegalArgumentException("El precio no puede ser negativo");
-        }
-    }
-
-    // Constructor de la clase Producto, recibe nombre, precio y categoría del producto.
-    public Producto(int id, String nombre, double precio, CategoriaProducto categoria) {
+    private static void validarId(int id) {
         if (id < 0) {
             throw new IllegalArgumentException("El id no puede ser negativo");
         }
-        if (nombre == null || nombre.isEmpty()) {
-            throw new IllegalArgumentException("Nombre no puede ser vacío o nulo");
+    }
+
+    private static void validarNombre(String nombre) {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre no puede ser nulo ni estar vacío");
         }
-        validarPrecio(precio);
+    }
+
+    private static void validarPrecio(double precio) {
+        if (precio < 0 || Double.isNaN(precio) || Double.isInfinite(precio)) {
+            throw new IllegalArgumentException("El precio debe ser un número finito y no negativo");
+        }
+    }
+
+    private static void validarCategoria(CategoriaProducto categoria) {
         if (categoria == null) {
-            throw new IllegalArgumentException("Categoria no puede ser nulo");
+            throw new IllegalArgumentException("La categoría no puede ser nula");
         }
+    }
+
+    public Producto(int id, String nombre, double precio, CategoriaProducto categoria) {
+        validarId(id);
+        validarNombre(nombre);
+        validarPrecio(precio);
+        validarCategoria(categoria);
 
         this.id = id;
-        this.nombre = nombre;
+        this.nombre = nombre.trim();
         this.precio = precio;
         this.categoria = categoria;
     }
 
-    // Para settear el precio del producto.
-    @Override public void setPrecio(double precio) {
+    @Override
+    public void setPrecio(double precio) {
         validarPrecio(precio);
         this.precio = precio;
     }
-    
-    // Obtener el id.
-    @Override public int getId() { return id; }
-    // Obtener el nombre.
-    @Override public String getNombre() { return nombre; }
-    // Obtener el precio.
-    @Override public double getPrecio() { return precio; }
-    // Obtener la categoría del producto.
-    @Override public CategoriaProducto getCategoria() { return categoria; }
 
-    // Metodo toString para representar el producto como una cadena de texto.
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public String getNombre() {
+        return nombre;
+    }
+
+    @Override
+    public double getPrecio() {
+        return precio;
+    }
+
+    @Override
+    public CategoriaProducto getCategoria() {
+        return categoria;
+    }
+
     @Override
     public String toString() {
-        return "Producto Descripcion -> ID: " + id + " | Nombre: " + nombre + " | Precio: " + precio  + " | Categoria: " + categoria;
+        return "Producto -> ID: " + id
+                + " | Nombre: " + nombre
+                + " | Precio: " + precio
+                + " | Categoría: " + categoria;
     }
 }
-
