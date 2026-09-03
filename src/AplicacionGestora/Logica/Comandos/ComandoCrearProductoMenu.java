@@ -43,6 +43,7 @@ public class ComandoCrearProductoMenu implements IComando {
         controladorCatalogo.agregarProducto(producto);
         ejecutado = true;
     }
+    //Nota, NUNCA LLAMEN A EJECUTAR DIRECTAMENTE, Haganlo a travez del gestor. Ejemplo: gestorAcciones.ejecutarComando(comandoCrear);
 
     @Override
     public void deshacer() {
