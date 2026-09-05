@@ -1,7 +1,7 @@
-package AplicacionGestora.Logica.Models.DAO;
+package AplicacionGestora.Logica.DAO;
 
 import AplicacionGestora.Logica.Models.Interfaces.PedidoDAO;
-import AplicacionGestora.Logica.Models.Pedido;
+import AplicacionGestora.Logica.Structures.Pedido;
 import AplicacionGestora.Persistencia.PersistenciaPedido;
 
 import java.util.ArrayList;
@@ -36,7 +36,6 @@ public class PedidoDAOImpl implements PedidoDAO {
                 return pedido;
             }
         }
-
         return null;
     }
 

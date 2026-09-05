@@ -1,4 +1,4 @@
-package AplicacionGestora.Logica.Models;
+package AplicacionGestora.Logica.Structures;
 
 import AplicacionGestora.Logica.Models.Interfaces.IProducto;
 

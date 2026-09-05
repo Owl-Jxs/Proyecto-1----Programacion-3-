@@ -2,8 +2,8 @@ package AplicacionGestora.Logica.Controllers;
 
 import AplicacionGestora.Logica.Models.Interfaces.IProducto;
 import AplicacionGestora.Logica.Models.Interfaces.PedidoDAO;
-import AplicacionGestora.Logica.Models.LineaPedido;
-import AplicacionGestora.Logica.Models.Pedido;
+import AplicacionGestora.Logica.Structures.LineaPedido;
+import AplicacionGestora.Logica.Structures.Pedido;
 
 import java.util.Date;
 

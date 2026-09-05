@@ -1,4 +1,4 @@
-package AplicacionGestora.Logica.Models;
+package AplicacionGestora.Logica.Structures;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -87,8 +87,8 @@ public class Pedido {
         this.estado = estado.trim();
     }
 
-    public List<LineaPedido> getLineas() {
-        return new ArrayList<>(lineas);
+    public final List<LineaPedido> getLineas() {
+        return lineas;
     }
 
 }

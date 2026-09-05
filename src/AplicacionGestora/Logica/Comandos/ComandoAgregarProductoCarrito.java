@@ -3,8 +3,8 @@ package AplicacionGestora.Logica.Comandos;
 import AplicacionGestora.Logica.Controllers.ControladorPedido;
 import AplicacionGestora.Logica.Models.Interfaces.IComando;
 import AplicacionGestora.Logica.Models.Interfaces.IProducto;
-import AplicacionGestora.Logica.Models.LineaPedido;
-import AplicacionGestora.Logica.Models.Pedido;
+import AplicacionGestora.Logica.Structures.LineaPedido;
+import AplicacionGestora.Logica.Structures.Pedido;
 
 // Representa la acción de agregar un producto al carrito.
 public class ComandoAgregarProductoCarrito implements IComando {

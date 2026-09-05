@@ -1,4 +1,4 @@
-package AplicacionGestora.Logica.Models.DAO;
+package AplicacionGestora.Logica.DAO;
 
 import AplicacionGestora.Logica.Models.Interfaces.CatalogoDAO;
 import AplicacionGestora.Logica.Models.Producto;
