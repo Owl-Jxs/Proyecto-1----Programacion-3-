@@ -66,8 +66,15 @@ public class ControladorPedido {
     public void procesarPedidoTotal() {
         validarPedidoConLineas();
 
+        String estadoAnterior = pedidoActual.getEstado();
         pedidoActual.setEstado("Procesado");
-        pedidoDAO.guardarPedido(pedidoActual);
+
+        try {
+            pedidoDAO.guardarPedido(pedidoActual);
+        } catch (RuntimeException excepcion) {
+            pedidoActual.setEstado(estadoAnterior);
+            throw excepcion;
+        }
 
         iniciarNuevoPedido();
     }
@@ -75,8 +82,15 @@ public class ControladorPedido {
     public void cancelarPedido() {
         validarPedidoConLineas();
 
+        String estadoAnterior = pedidoActual.getEstado();
         pedidoActual.setEstado("Cancelado");
-        pedidoDAO.guardarPedido(pedidoActual);
+
+        try {
+            pedidoDAO.guardarPedido(pedidoActual);
+        } catch (RuntimeException excepcion) {
+            pedidoActual.setEstado(estadoAnterior);
+            throw excepcion;
+        }
 
         iniciarNuevoPedido();
     }
@@ -84,5 +98,5 @@ public class ControladorPedido {
     public Pedido getPedidoActual() {
         return pedidoActual;
     }
-  
+
 }
