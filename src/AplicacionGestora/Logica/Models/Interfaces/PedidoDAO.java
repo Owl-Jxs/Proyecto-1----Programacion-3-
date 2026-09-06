@@ -1,7 +1,8 @@
 package AplicacionGestora.Logica.Models.Interfaces;
 
-import AplicacionGestora.Logica.Models.Pedido;
+import AplicacionGestora.Logica.Structures.Pedido;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface PedidoDAO {
 
@@ -13,7 +14,7 @@ public interface PedidoDAO {
     }
 
     /*Obtiene todos los pedidos registrados en el historial*/
-    default ArrayList<Pedido> obtenerHistorialPedidos() {
+    default List<Pedido> obtenerHistorialPedidos() {
         return pedidos;
     }
 
