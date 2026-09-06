@@ -8,11 +8,12 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-// Historial de pedidos en memoria con guardado de recibos CSV.
+/**
+ * Historial de pedidos en memoria ({@link LinkedHashMap} indexado por id)
+ * con guardado de recibos en CSV.
+ */
 public class PedidoDAOImpl implements PedidoDAO {
-    // LinkedHashMap por consistencia con catalogo.
-    // Aparte busqueda por id O(1). La clave es id y no existirian pedidos duplicados
-    // Orden de insercion se preserva, al obtenerlos se devuelve en mismo orden en que se guardaron.
+
     private final LinkedHashMap<Integer, Pedido> pedidos;
     private final PersistenciaPedido persistenciaPedido;
 
