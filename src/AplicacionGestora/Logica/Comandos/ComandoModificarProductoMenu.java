@@ -41,17 +41,8 @@ public class ComandoModificarProductoMenu implements IComando {
                 );
 
         this.controladorCatalogo = controladorCatalogo;
-        this.productoAnterior = copiarProducto(productoRegistrado);
-        this.productoModificado = copiarProducto(productoModificado);
-    }
-
-    private Producto copiarProducto(Producto producto) {
-        return new Producto(
-                producto.getId(),
-                producto.getNombre(),
-                producto.getPrecio(),
-                producto.getCategoria()
-        );
+        this.productoAnterior = productoRegistrado.copiar();
+        this.productoModificado = productoModificado.copiar();
     }
 
     @Override

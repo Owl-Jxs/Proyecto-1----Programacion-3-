@@ -32,16 +32,7 @@ public class ComandoEliminarProductoMenu implements IComando {
                 controladorCatalogo.obtenerProducto(idProducto);
 
         this.controladorCatalogo = controladorCatalogo;
-        this.productoEliminado = copiarProducto(productoRegistrado);
-    }
-
-    private Producto copiarProducto(Producto producto) {
-        return new Producto(
-                producto.getId(),
-                producto.getNombre(),
-                producto.getPrecio(),
-                producto.getCategoria()
-        );
+        this.productoEliminado = productoRegistrado.copiar();
     }
 
     @Override
@@ -54,7 +45,7 @@ public class ComandoEliminarProductoMenu implements IComando {
     @Override
     public void deshacer() {
         controladorCatalogo.agregarProducto(
-                copiarProducto(productoEliminado)
+                productoEliminado.copiar()
         );
     }
 }

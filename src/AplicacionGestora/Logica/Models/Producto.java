@@ -84,6 +84,15 @@ public class Producto implements IProducto {
         return categoria;
     }
 
+    /**
+     * Crea una copia independiente del producto (snapshot).
+     *
+     * @return un nuevo producto con los mismos valores
+     */
+    public Producto copiar() {
+        return new Producto(id, nombre, precio, categoria);
+    }
+
     @Override
     public String toString() {
         return "Producto -> ID: " + id
