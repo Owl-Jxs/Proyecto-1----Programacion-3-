@@ -1,8 +1,8 @@
 package AplicacionGestora.Persistencia;
 
 import AplicacionGestora.Logica.Models.Interfaces.IProducto;
-import AplicacionGestora.Logica.Models.LineaPedido;
-import AplicacionGestora.Logica.Models.Pedido;
+import AplicacionGestora.Logica.Structures.LineaPedido;
+import AplicacionGestora.Logica.Structures.Pedido;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
