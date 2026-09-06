@@ -4,12 +4,20 @@ import AplicacionGestora.Logica.Controllers.ControladorCatalogo;
 import AplicacionGestora.Logica.Models.Interfaces.IComando;
 import AplicacionGestora.Logica.Models.Producto;
 
-// Representa la acción de eliminar un producto del menú.
+/**
+ * Representa la acción de eliminar un producto del menú.
+ */
 public class ComandoEliminarProductoMenu implements IComando {
 
     private ControladorCatalogo controladorCatalogo;
     private Producto productoEliminado;
 
+    /**
+     * Guarda una copia del producto a eliminar para poder restaurarlo al deshacer.
+     *
+     * @param controladorCatalogo el controlador del catálogo (no nulo)
+     * @param idProducto          el identificador del producto a eliminar
+     */
     public ComandoEliminarProductoMenu(
             ControladorCatalogo controladorCatalogo,
             int idProducto
