@@ -1,60 +1,53 @@
 package AplicacionGestora.Logica.DAO;
 
+import AplicacionGestora.Logica.Models.Catalogo;
 import AplicacionGestora.Logica.Models.Interfaces.CatalogoDAO;
 import AplicacionGestora.Logica.Models.Producto;
+import AplicacionGestora.Persistencia.PersistenciaCatalogo;
 
-import java.util.ArrayList;
 import java.util.List;
 
-// Implementación en memoria del catálogo mediante un ArrayList.
 public class CatalogoDAOImpl implements CatalogoDAO {
+    private final Catalogo catalogo;
+    private final PersistenciaCatalogo persistencia;
 
-    private final List<Producto> productos;
-
+    /*Crea el DAO del catálogo e inicializa el catálogo cargando los productos almacenados en el archivo.*/
     public CatalogoDAOImpl() {
-        productos = new ArrayList<>();
+        persistencia = new PersistenciaCatalogo();
+        catalogo = persistencia.cargar();
     }
 
+    /*Agrega un producto al catálogo y guarda los cambios en el archivo de persistencia.*/
     @Override
     public void crearProducto(Producto producto) {
-        productos.add(producto);
+        catalogo.agregarProducto(producto);
+        persistencia.guardar(catalogo);
     }
 
+    /*Busca un producto en el catálogo utilizando su identificador.*/
     @Override
     public Producto leerProducto(int id) {
-        for (Producto producto : productos) {
-            if (producto.getId() == id) {
-                return producto;
-            }
-        }
-
-        return null;
+        return catalogo.obtenerProducto(id);
     }
 
+    /*Actualiza un producto existente en el catálogo y guarda*/
     @Override
-    public void actualizarProducto(Producto productoActualizado) {
-        for (int i = 0; i < productos.size(); i++) {
-            Producto productoRegistrado = productos.get(i);
-
-            if (productoRegistrado.getId() == productoActualizado.getId()) {
-                productos.set(i, productoActualizado);
-                return;
-            }
-        }
+    public void actualizarProducto(Producto producto) {
+        catalogo.actualizarProducto(producto);
+        persistencia.guardar(catalogo);
     }
 
+    /*Elimina un producto del catálogo utilizando su identificador
+    y guarda los cambios en el archivo de persistencia.*/
     @Override
     public void borrarProducto(int id) {
-        for (int i = 0; i < productos.size(); i++) {
-            if (productos.get(i).getId() == id) {
-                productos.remove(i);
-                return;
-            }
-        }
+        catalogo.eliminarProducto(id);
+        persistencia.guardar(catalogo);
     }
 
+    /*Obtiene la lista de productos registrados en el catálogo.*/
     @Override
     public List<Producto> listarProductos() {
-        return new ArrayList<>(productos);
+        return catalogo.listarProductos();
     }
 }
