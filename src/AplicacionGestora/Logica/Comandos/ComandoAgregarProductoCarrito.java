@@ -6,12 +6,19 @@ import AplicacionGestora.Logica.Models.Interfaces.IProducto;
 import AplicacionGestora.Logica.Structures.LineaPedido;
 import AplicacionGestora.Logica.Structures.Pedido;
 
-// Representa la acción de agregar un producto al carrito.
+/**
+ * Representa la acción de agregar un producto al carrito (pedido actual).
+ */
 public class ComandoAgregarProductoCarrito implements IComando {
 
     private Pedido pedido;
     private LineaPedido lineaPedido;
 
+    /**
+     * @param controladorPedido el controlador del pedido (no nulo)
+     * @param producto          el producto a agregar
+     * @param cantidad          la cantidad del producto
+     */
     public ComandoAgregarProductoCarrito(
             ControladorPedido controladorPedido,
             IProducto producto,
@@ -49,5 +56,5 @@ public class ComandoAgregarProductoCarrito implements IComando {
         validarPedidoPendiente();
         pedido.eliminarLinea(lineaPedido);
     }
-  
+
 }

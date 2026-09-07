@@ -7,12 +7,18 @@ import AplicacionGestora.Logica.Structures.Pedido;
 
 import java.util.Date;
 
-// Administra el pedido actual y su almacenamiento en el historial.
+/**
+ * Administra el pedido actual y su almacenamiento en el historial.
+ */
 public class ControladorPedido {
 
     private PedidoDAO pedidoDAO;
     private Pedido pedidoActual;
 
+    /**
+     * @param pedidoDAO el DAO del historial de pedidos (no nulo)
+     * @throws IllegalArgumentException si el DAO es nulo
+     */
     public ControladorPedido(PedidoDAO pedidoDAO) {
         if (pedidoDAO == null) {
             throw new IllegalArgumentException(
@@ -51,6 +57,12 @@ public class ControladorPedido {
         }
     }
 
+    /**
+     * Agrega una línea de producto al pedido actual.
+     *
+     * @param producto el producto a agregar
+     * @param cantidad la cantidad del producto
+     */
     public void agregarLineaAlPedido(
             IProducto producto,
             int cantidad
@@ -63,6 +75,12 @@ public class ControladorPedido {
         pedidoActual.agregarLinea(linea);
     }
 
+    /**
+     * Procesa el pedido actual: lo marca como "Procesado", lo guarda en el
+     * historial y comienza un pedido nuevo.
+     *
+     * @throws IllegalStateException si el pedido no contiene productos
+     */
     public void procesarPedidoTotal() {
         validarPedidoConLineas();
 
@@ -79,6 +97,12 @@ public class ControladorPedido {
         iniciarNuevoPedido();
     }
 
+    /**
+     * Cancela el pedido actual: lo marca como "Cancelado", lo guarda en el
+     * historial y comienza un pedido nuevo.
+     *
+     * @throws IllegalStateException si el pedido no contiene productos
+     */
     public void cancelarPedido() {
         validarPedidoConLineas();
 
@@ -95,6 +119,9 @@ public class ControladorPedido {
         iniciarNuevoPedido();
     }
 
+    /**
+     * @return el pedido que se está armando actualmente
+     */
     public Pedido getPedidoActual() {
         return pedidoActual;
     }

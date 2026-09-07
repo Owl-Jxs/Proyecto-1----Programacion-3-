@@ -4,13 +4,21 @@ import AplicacionGestora.Logica.Controllers.ControladorCatalogo;
 import AplicacionGestora.Logica.Models.Interfaces.IComando;
 import AplicacionGestora.Logica.Models.Producto;
 
-// Representa la acción de modificar un producto del menú.
+/**
+ * Representa la acción de modificar un producto del menú.
+ */
 public class ComandoModificarProductoMenu implements IComando {
 
     private ControladorCatalogo controladorCatalogo;
     private Producto productoAnterior;
     private Producto productoModificado;
 
+    /**
+     * Guarda una copia del producto antes de modificarlo para poder restaurarlo al deshacer.
+     *
+     * @param controladorCatalogo el controlador del catálogo (no nulo)
+     * @param productoModificado  el producto con los datos actualizados (no nulo)
+     */
     public ComandoModificarProductoMenu(
             ControladorCatalogo controladorCatalogo,
             Producto productoModificado
@@ -33,17 +41,8 @@ public class ComandoModificarProductoMenu implements IComando {
                 );
 
         this.controladorCatalogo = controladorCatalogo;
-        this.productoAnterior = copiarProducto(productoRegistrado);
-        this.productoModificado = copiarProducto(productoModificado);
-    }
-
-    private Producto copiarProducto(Producto producto) {
-        return new Producto(
-                producto.getId(),
-                producto.getNombre(),
-                producto.getPrecio(),
-                producto.getCategoria()
-        );
+        this.productoAnterior = productoRegistrado.copiar();
+        this.productoModificado = productoModificado.copiar();
     }
 
     @Override
@@ -55,5 +54,5 @@ public class ComandoModificarProductoMenu implements IComando {
     public void deshacer() {
         controladorCatalogo.modificarProducto(productoAnterior);
     }
-  
+
 }

@@ -1,6 +1,17 @@
 package AplicacionGestora.Logica.Models.Interfaces;
 
+/**
+ * Contrato para una acción deshacible (patrón Command).
+ */
 public interface IComando {
-    void ejecutar ();
-    void deshacer ();
+
+    /**
+     * Ejecuta la acción definida por el comando.
+     */
+    void ejecutar();
+
+    /**
+     * Revierte el resultado de {@link #ejecutar()}.
+     */
+    void deshacer();
 }
