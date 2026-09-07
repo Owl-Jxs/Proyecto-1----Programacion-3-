@@ -1,60 +1,59 @@
 package AplicacionGestora.Logica.DAO;
 
+import AplicacionGestora.Logica.Models.Catalogo;
 import AplicacionGestora.Logica.Models.Interfaces.CatalogoDAO;
 import AplicacionGestora.Logica.Models.Producto;
+import AplicacionGestora.Persistencia.PersistenciaCatalogo;
 
-import java.util.ArrayList;
 import java.util.List;
 
-// Implementación en memoria del catálogo mediante un ArrayList.
+/**
+ * DAO del catálogo que opera sobre un {@link Catalogo} en memoria y persiste
+ * los cambios en CSV.
+ */
 public class CatalogoDAOImpl implements CatalogoDAO {
 
-    private final List<Producto> productos;
+    private final Catalogo catalogo;
+    private final PersistenciaCatalogo persistencia;
 
+    /**
+     * Inicializa el catálogo cargando los productos almacenados en el archivo.
+     */
     public CatalogoDAOImpl() {
-        productos = new ArrayList<>();
+        persistencia = new PersistenciaCatalogo();
+        catalogo = persistencia.cargar();
     }
 
     @Override
     public void crearProducto(Producto producto) {
-        productos.add(producto);
+        catalogo.agregarProducto(producto);
+        persistencia.guardar(catalogo);
     }
 
     @Override
     public Producto leerProducto(int id) {
-        for (Producto producto : productos) {
-            if (producto.getId() == id) {
-                return producto;
-            }
-        }
-
-        return null;
+        return catalogo.obtenerProducto(id);
     }
 
     @Override
-    public void actualizarProducto(Producto productoActualizado) {
-        for (int i = 0; i < productos.size(); i++) {
-            Producto productoRegistrado = productos.get(i);
-
-            if (productoRegistrado.getId() == productoActualizado.getId()) {
-                productos.set(i, productoActualizado);
-                return;
-            }
-        }
+    public void actualizarProducto(Producto producto) {
+        catalogo.actualizarProducto(producto);
+        persistencia.guardar(catalogo);
     }
 
     @Override
     public void borrarProducto(int id) {
-        for (int i = 0; i < productos.size(); i++) {
-            if (productos.get(i).getId() == id) {
-                productos.remove(i);
-                return;
-            }
-        }
+        catalogo.eliminarProducto(id);
+        persistencia.guardar(catalogo);
     }
 
     @Override
     public List<Producto> listarProductos() {
-        return new ArrayList<>(productos);
+        return catalogo.listarProductos();
+    }
+
+    @Override
+    public int siguienteId() {
+        return catalogo.siguienteId();
     }
 }
