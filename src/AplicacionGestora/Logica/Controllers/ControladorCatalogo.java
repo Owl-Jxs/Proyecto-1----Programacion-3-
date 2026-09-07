@@ -109,4 +109,11 @@ public class ControladorCatalogo {
     public List<Producto> obtenerCatalogo() {
         return catalogoDAO.listarProductos();
     }
+
+    /**
+     * @return el siguiente identificador disponible para un producto nuevo
+     */
+    public int siguienteId() {
+        return catalogoDAO.siguienteId();
+    }
 }
