@@ -23,7 +23,6 @@ public interface CatalogoDAO {
      * @return el producto si existe, {@code null} en caso contrario
      */
     Producto leerProducto(int id);
-
     /**
      * Reemplaza un producto existente.
      *
@@ -42,4 +41,9 @@ public interface CatalogoDAO {
      * @return una lista con todos los productos del catálogo
      */
     List<Producto> listarProductos();
+
+    /**
+     * @return el siguiente identificador disponible para un producto nuevo
+     */
+    int siguienteId();
 }

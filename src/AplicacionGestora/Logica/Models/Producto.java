@@ -23,6 +23,11 @@ public class Producto implements IProducto {
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new IllegalArgumentException("El nombre no puede ser nulo ni estar vacío");
         }
+        if (nombre.contains(",") || nombre.contains("\"")
+                || nombre.contains("\n") || nombre.contains("\r")) {
+            throw new IllegalArgumentException(
+                    "El nombre no puede contener comas, comillas ni saltos de línea");
+        }
     }
 
     private static void validarPrecio(double precio) {
