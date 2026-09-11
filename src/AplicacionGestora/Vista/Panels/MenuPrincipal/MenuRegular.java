@@ -16,7 +16,7 @@ public class MenuRegular extends JPanel {
         setLayout(new BorderLayout());
         add (panelRaiz, BorderLayout.CENTER);
 
-        //btnRealizarPedido.addActionListener(e-> main.mostrarCatalogoPedido);
+        btnRealizarPedido.addActionListener(e -> main.mostrarCatalogoPedido());
         btnVolver.addActionListener(e->main.mostrarSeleccion());
     }
 
@@ -24,7 +24,7 @@ public class MenuRegular extends JPanel {
         if (panelRaiz != null){
             return;
         }
-        panelRaiz = new JPanel(new GridLayout());
+        panelRaiz = new JPanel(new GridBagLayout());
         panelRaiz.setBorder (BorderFactory.createEmptyBorder(60,80,60,80) );
 
         lblTitulo = new JLabel ("MENU REGULAR", SwingConstants.CENTER);
