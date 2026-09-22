@@ -13,10 +13,21 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+/**
+ * Guarda pedidos como archivos CSV de recibo, uno por pedido,
+ * en la carpeta {@code datos/pedidos}.
+ */
 public class PersistenciaPedido {
 
     private final Path carpetaPedidos = Paths.get("datos", "pedidos");
 
+    /**
+     * Genera y guarda el recibo CSV de un pedido.
+     *
+     * @param pedido el pedido a guardar (no nulo y con al menos una línea)
+     * @throws IllegalArgumentException si el pedido es nulo o no tiene productos
+     * @throws IllegalStateException    si no se pudo escribir el archivo
+     */
     public void guardarPedido(Pedido pedido) {
         if (pedido == null) {
             throw new IllegalArgumentException(
@@ -103,5 +114,5 @@ public class PersistenciaPedido {
     private String escaparTexto(String texto) {
         return "\"" + texto.replace("\"", "\"\"") + "\"";
     }
-  
+
 }

@@ -16,8 +16,8 @@ public class MenuAdmin extends JPanel {
         setLayout( new BorderLayout());
         add (panelRaiz, BorderLayout.CENTER);
 
-        //btnCatalogo.addActionListener(e-> main.mostrarCatalogoAdmin);
-        //btnFinanzas.addActionListener(e->main.mostrarFinanzas);
+        btnCatalogo.addActionListener(e -> main.mostrarCatalogoAdmin());
+        btnFinanzas.addActionListener(e -> main.mostrarFinanzas());
         btnVolver.addActionListener(e->main.mostrarSeleccion());
     }
 
@@ -25,7 +25,7 @@ public class MenuAdmin extends JPanel {
         if (panelRaiz != null){
             return;
         }
-        panelRaiz = new JPanel(new GridLayout());
+        panelRaiz = new JPanel(new GridBagLayout());
         panelRaiz.setBorder (BorderFactory.createEmptyBorder(60,80,60,80) );
 
         lbTitulo = new JLabel("MENU ADMINISTRADOR");

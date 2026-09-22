@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-// Representa un pedido y las líneas de productos que lo componen.
+/**
+ * Representa un pedido y las líneas de productos que lo componen.
+ */
 public class Pedido {
 
     private final int id;
@@ -12,6 +14,13 @@ public class Pedido {
     private final List<LineaPedido> lineas;
     private String estado;
 
+    /**
+     * Crea un pedido con estado inicial "Pendiente".
+     *
+     * @param id    el identificador del pedido (no negativo)
+     * @param fecha la fecha del pedido (no nula)
+     * @throws IllegalArgumentException si el id es negativo o la fecha es nula
+     */
     public Pedido(int id, Date fecha) {
         if (id < 0) {
             throw new IllegalArgumentException(
@@ -31,6 +40,11 @@ public class Pedido {
         this.estado = "Pendiente";
     }
 
+    /**
+     * Agrega una línea de producto al pedido.
+     *
+     * @param linea la línea a agregar (no nula)
+     */
     public void agregarLinea(LineaPedido linea) {
         if (linea == null) {
             throw new IllegalArgumentException(
@@ -41,6 +55,12 @@ public class Pedido {
         lineas.add(linea);
     }
 
+    /**
+     * Elimina una línea del pedido.
+     *
+     * @param linea la línea a eliminar (no nula y perteneciente al pedido)
+     * @throws IllegalArgumentException si la línea es nula o no pertenece al pedido
+     */
     public void eliminarLinea(LineaPedido linea) {
         if (linea == null) {
             throw new IllegalArgumentException(
@@ -55,6 +75,11 @@ public class Pedido {
         }
     }
 
+    /**
+     * Calcula el total del pedido sumando el subtotal de cada línea.
+     *
+     * @return el total del pedido
+     */
     public double calcularTotal() {
         double total = 0;
 
@@ -69,6 +94,9 @@ public class Pedido {
         return id;
     }
 
+    /**
+     * @return una copia defensiva de la fecha del pedido
+     */
     public Date getFecha() {
         return new Date(fecha.getTime());
     }
@@ -77,6 +105,11 @@ public class Pedido {
         return estado;
     }
 
+    /**
+     * Asigna un nuevo estado al pedido.
+     *
+     * @param estado el estado del pedido (no nulo ni vacío)
+     */
     public void setEstado(String estado) {
         if (estado == null || estado.trim().isEmpty()) {
             throw new IllegalArgumentException(
@@ -87,6 +120,9 @@ public class Pedido {
         this.estado = estado.trim();
     }
 
+    /**
+     * @return la lista de líneas del pedido
+     */
     public final List<LineaPedido> getLineas() {
         return lineas;
     }

@@ -4,18 +4,26 @@ import AplicacionGestora.Logica.Models.Catalogo;
 import AplicacionGestora.Logica.Models.Producto;
 import AplicacionGestora.Logica.Models.CategoriaProducto;
 
-import java.io.BufferedWriter; //escribir texto en un archivo de manera eficiente
-import java.io.IOException; //maneja errores relacionados con la entrada y salida de archivos
-import java.nio.charset.StandardCharsets; //especifica cómo se codifican los caracteres del archivo
-import java.nio.file.Files; //proporciona métodos para trabajar directamente con archivos y carpetas
-import java.nio.file.Path; //representa la ubicación o ruta de un archivo o carpeta
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Persiste el catálogo de productos en un archivo CSV.
+ */
 public class PersistenciaCatalogo {
 
     private static final Path RUTA_ARCHIVO = Paths.get("datos", "catalogo", "productos.csv");
 
-    /*Carga los productos almacenados en el archivo CSV. Si el archivo no existe, devuelve un catálogo vacío.*/
+    /**
+     * Carga los productos almacenados en el archivo CSV.
+     * Si el archivo no existe, devuelve un catálogo vacío.
+     *
+     * @return el catálogo con los productos leídos del archivo
+     */
     public Catalogo cargar() {
         Catalogo catalogo = new Catalogo();
 
@@ -26,12 +34,12 @@ public class PersistenciaCatalogo {
         try {
             for (String linea : Files.readAllLines(RUTA_ARCHIVO, StandardCharsets.UTF_8)) {
 
-                //Ignora la cabecera del archivo
+                // Ignora la cabecera del archivo
                 if (linea.equals("id,nombre,precio,categoria")) {
                     continue;
                 }
 
-                //Ignora líneas vacías
+                // Ignora líneas vacías
                 if (linea.trim().isEmpty()) {
                     continue;
                 }
@@ -56,8 +64,14 @@ public class PersistenciaCatalogo {
         return catalogo;
     }
 
-    /*Guarda todos los productos del catálogo en un archivo CSV.
-    El archivo anterior se reemplaza utilizando un archivo temporal para evitar dejar un archivo incompleto.*/
+    /**
+     * Guarda todos los productos del catálogo en un archivo CSV.
+     * El archivo anterior se reemplaza utilizando un archivo temporal para
+     * evitar dejar un archivo incompleto.
+     *
+     * @param catalogo el catálogo a guardar
+     * @throws IllegalStateException si no se pudo escribir el archivo
+     */
     public void guardar(Catalogo catalogo) {
         Path archivoTemporal = null;
 
@@ -72,35 +86,35 @@ public class PersistenciaCatalogo {
 
             StringBuilder contenido = new StringBuilder();
 
-            //Cabecera del CSV
-            contenido.append("id,nombre,precio,categoria\n");
+            // Cabecera del CSV
+            contenido.append("id,nombre,precio,categoria\r\n");
 
-            //Agrega cada producto al contenido
+            // Agrega cada producto al contenido
             for (Producto producto : catalogo.listarProductos()) {
 
                 contenido.append(producto.getId())
                         .append(",")
-                        .append(escaparTexto(producto.getNombre()))
+                        .append(producto.getNombre())
                         .append(",")
                         .append(producto.getPrecio())
                         .append(",")
-                        .append(producto.getCategoria())
-                        .append("\n");
+                        .append(producto.getCategoria().name())
+                        .append("\r\n");
             }
 
             try (BufferedWriter escritor = Files.newBufferedWriter(archivoTemporal, StandardCharsets.UTF_8)) {
                 escritor.write(contenido.toString());
             }
 
-            //Reemplaza el archivo original
+            // Reemplaza el archivo original
             Files.move(archivoTemporal, RUTA_ARCHIVO, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
 
             archivoTemporal = null;
 
         } catch (IOException | SecurityException e) {
-            System.err.println("Error al guardar el catálogo: " + e.getMessage());
+            throw new IllegalStateException("No se pudo guardar el catálogo en CSV", e);
         } finally {
-            //Si ocurrió un error, elimina el archivo temporal
+            // Si ocurrió un error, elimina el archivo temporal
             if (archivoTemporal != null) {
                 try {
                     Files.deleteIfExists(archivoTemporal);
@@ -109,17 +123,5 @@ public class PersistenciaCatalogo {
                 }
             }
         }
-    }
-
-    /*Escapa un texto para poder almacenarlo correctamente en un CSV.
-    Si contiene comas, comillas o saltos de línea, se coloca entre comillas y las comillas internas se duplican.*/
-    private String escaparTexto(String texto) {
-        if (texto == null) {
-            return "";
-        }
-        if (texto.contains(",") || texto.contains("\"") || texto.contains("\n") || texto.contains("\r")) {
-            return "\"" + texto.replace("\"", "\"\"") + "\"";
-        }
-        return texto;
     }
 }

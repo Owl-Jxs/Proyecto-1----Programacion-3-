@@ -5,38 +5,37 @@ import AplicacionGestora.Logica.Structures.Pedido;
 import AplicacionGestora.Persistencia.PersistenciaPedido;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
-// Historial de pedidos en memoria con guardado de recibos CSV.
+/**
+ * Historial de pedidos en memoria ({@link LinkedHashMap} indexado por id)
+ * con guardado de recibos en CSV.
+ */
 public class PedidoDAOImpl implements PedidoDAO {
 
-    private final List<Pedido> pedidos;
+    private final LinkedHashMap<Integer, Pedido> pedidos;
     private final PersistenciaPedido persistenciaPedido;
 
     public PedidoDAOImpl() {
-        pedidos = new ArrayList<>();
+        pedidos = new LinkedHashMap<>();
         persistenciaPedido = new PersistenciaPedido();
     }
 
     @Override
     public void guardarPedido(Pedido pedido) {
         persistenciaPedido.guardarPedido(pedido);
-        pedidos.add(pedido);
+        pedidos.put(pedido.getId(), pedido);
     }
 
     @Override
     public List<Pedido> obtenerHistorialPedidos() {
-        return new ArrayList<>(pedidos);
+        return new ArrayList<>(pedidos.values());
     }
 
     @Override
     public Pedido obtenerPedidoPorId(int id) {
-        for (Pedido pedido : pedidos) {
-            if (pedido.getId() == id) {
-                return pedido;
-            }
-        }
-        return null;
+        return pedidos.get(id);
     }
 
 }

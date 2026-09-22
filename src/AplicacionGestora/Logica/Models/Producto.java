@@ -2,7 +2,12 @@ package AplicacionGestora.Logica.Models;
 
 import AplicacionGestora.Logica.Models.Interfaces.IProducto;
 
+/**
+ * Representa un producto del menú: su identificador, nombre, precio y categoría.
+ * El id, el nombre y la categoría son inmutables; el precio puede modificarse.
+ */
 public class Producto implements IProducto {
+
     private final int id;
     private final String nombre;
     private double precio;
@@ -18,6 +23,11 @@ public class Producto implements IProducto {
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new IllegalArgumentException("El nombre no puede ser nulo ni estar vacío");
         }
+        if (nombre.contains(",") || nombre.contains("\"")
+                || nombre.contains("\n") || nombre.contains("\r")) {
+            throw new IllegalArgumentException(
+                    "El nombre no puede contener comas, comillas ni saltos de línea");
+        }
     }
 
     private static void validarPrecio(double precio) {
@@ -32,6 +42,15 @@ public class Producto implements IProducto {
         }
     }
 
+    /**
+     * Crea un producto validando todos sus atributos.
+     *
+     * @param id        el identificador del producto (no negativo)
+     * @param nombre    el nombre del producto (no nulo ni vacío)
+     * @param precio    el precio del producto (no negativo y finito)
+     * @param categoria la categoría del producto (no nula)
+     * @throws IllegalArgumentException si algún atributo no es válido
+     */
     public Producto(int id, String nombre, double precio, CategoriaProducto categoria) {
         validarId(id);
         validarNombre(nombre);
@@ -68,6 +87,15 @@ public class Producto implements IProducto {
     @Override
     public CategoriaProducto getCategoria() {
         return categoria;
+    }
+
+    /**
+     * Crea una copia independiente del producto (snapshot).
+     *
+     * @return un nuevo producto con los mismos valores
+     */
+    public Producto copiar() {
+        return new Producto(id, nombre, precio, categoria);
     }
 
     @Override
